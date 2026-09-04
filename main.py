@@ -1,4 +1,4 @@
-from modules.password_analyzer import check_password_length, check_has_digit, check_has_uppercase, check_has_lowercase, check_has_special, calculate_score, get_strength
+from modules.password_analyzer import check_password_length, check_has_digit, check_has_uppercase, check_has_lowercase, check_has_special, calculate_score, get_strength, check_not_common_password, get_password_feedback
 
 password = input("请输入一个密码：")
 
@@ -39,4 +39,5 @@ print()
 score = calculate_score(password)
 print(f'密码得分:{score}/5')
 print(f'密码强度:{get_strength(password)}')
+print(get_password_feedback(password))
 

@@ -30,25 +30,41 @@ def check_has_special(password):
             return True
     return False
 
+def check_common_password(password):
+    weak_password = ["123456", "password", "qwerty", "admin123"]
+    if password in weak_password:
+        return True
+    return False
+
+def check_not_common_password(password):
+    return not check_common_password(password)
+
 def calculate_score(password):
     score = 0
     if check_password_length(password):
         score += 1
     if check_has_digit(password):
-            score += 1
+        score += 1
     if check_has_uppercase(password):
-            score += 1
+        score += 1
     if check_has_lowercase(password):
-            score += 1
+        score += 1
     if check_has_special(password):
-            score += 1
+        score += 1
     return score
 
 def get_strength(password):
-    score=calculate_score(password)
+    if check_common_password(password):
+        return "Weak"
+    score = calculate_score(password)
     if score <= 2:
         return "Weak"
     elif score == 5:
         return "Strong"
     else:
         return "Medium"
+
+def get_password_feedback(password):
+    if check_common_password(password):
+        return "该密码属于常见弱密码，即使字符组成复杂，也不建议使用。"
+    return "未发现常见弱密码风险。"
