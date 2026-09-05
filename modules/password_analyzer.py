@@ -39,6 +39,18 @@ def check_common_password(password):
 def check_not_common_password(password):
     return not check_common_password(password)
 
+def check_simple_sequence(password):
+    for i in range(len(password) - 2):
+        if password[i:i+3].isdigit() or password[i:i+3].isalpha():
+            diff1 = ord(password[i+2]) - ord(password[i+1])
+            diff2 = ord(password[i+1]) - ord(password[i])
+            if (diff1 == 1 and diff2 == 1) or (diff1 == -1 and diff2 == -1):
+                return True
+    return False
+
+def check_no_simple_sequence(password):
+    return not check_simple_sequence(password)
+    
 def calculate_score(password):
     score = 0
     if check_password_length(password):
@@ -60,6 +72,8 @@ def get_strength(password):
     if score <= 2:
         return "Weak"
     elif score == 5:
+        if check_simple_sequence(password):
+            return "Medium"
         return "Strong"
     else:
         return "Medium"

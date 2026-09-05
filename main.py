@@ -1,4 +1,15 @@
-from modules.password_analyzer import check_password_length, check_has_digit, check_has_uppercase, check_has_lowercase, check_has_special, calculate_score, get_strength, check_not_common_password, get_password_feedback
+from modules.password_analyzer import (
+    check_password_length, 
+    check_has_digit, 
+    check_has_uppercase, 
+    check_has_lowercase, 
+    check_has_special, 
+    calculate_score, 
+    get_strength, 
+    check_not_common_password, 
+    get_password_feedback,
+    check_no_simple_sequence,
+)
 
 password = input("请输入一个密码：")
 
@@ -28,6 +39,10 @@ checks = [
     (check_has_special,
      "密码中包含特殊字符",
      "密码中不包含特殊字符"
+    ),
+    (check_no_simple_sequence,
+     "没发现简单连续序列",
+     "警告：密码中包含简单连续序列，容易被猜测。"
     )
 ]
 
@@ -40,4 +55,3 @@ score = calculate_score(password)
 print(f'密码得分:{score}/5')
 print(f'密码强度:{get_strength(password)}')
 print(get_password_feedback(password))
-
