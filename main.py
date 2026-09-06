@@ -11,13 +11,17 @@ from modules.password_analyzer import (
     check_no_simple_sequence,
 )
 import getpass
-from modules.file_hash import calculate_file_hash
+from modules.file_hash import (
+    calculate_file_hash,
+    verify_file_hash
+)
 
 def main():
     while True:
         print("1. Password Analyzer")
         print("2. File Hash Calculator")
-        print("3. Exit")
+        print("3. File Hash Verify")
+        print("4. Exit")
         choice = input("请选择功能：")
         if choice == "1":
             run_password_analyzer()
@@ -26,7 +30,10 @@ def main():
             run_file_hash_calculator()
 
         elif choice == "3":
-            print("程序已退出")
+            run_file_hash_verifier()
+
+        elif choice == "4":
+            print("退出程序")
             break
         
         else:
@@ -53,6 +60,17 @@ def run_file_hash_calculator():
         print("文件不存在")
     else:
         print(file_hash)
+
+def run_file_hash_verifier():
+    file_path = input("请输入文件路径:")
+    expected_hash = input("请输入期望的 SHA-256 哈希值:")
+    result = verify_file_hash(file_path,expected_hash)
+    if result is None:
+        print("文件不存在")
+    elif result:
+        print("文件哈希匹配")
+    else:
+        print("文件哈希不匹配")
 
 def display_result(result, success_message, failure_message):
     if result:
