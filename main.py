@@ -10,8 +10,21 @@ from modules.password_analyzer import (
     get_password_feedback,
     check_no_simple_sequence,
 )
+import getpass
 
-password = input("请输入一个密码：")
+def main():
+    password = getpass.getpass("请输入一个密码：")
+    for function, success_message, failure_message in checks:
+        result = function(password)
+        display_result(result, success_message, failure_message)
+
+    print()
+
+    score = calculate_score(password)
+
+    print(f'密码得分:{score}/5')
+    print(f'密码强度:{get_strength(password)}')
+    print(get_password_feedback(password))
 
 def display_result(result, success_message, failure_message):
     if result:
@@ -46,12 +59,5 @@ checks = [
     )
 ]
 
-for function, success_message, failure_message in checks:
-    result = function(password)
-    display_result(result, success_message, failure_message)
-
-print()
-score = calculate_score(password)
-print(f'密码得分:{score}/5')
-print(f'密码强度:{get_strength(password)}')
-print(get_password_feedback(password))
+if __name__ == "__main__":
+    main()
