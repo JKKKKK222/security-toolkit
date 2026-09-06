@@ -55,7 +55,12 @@ def run_password_analyzer():
 
 def run_file_hash_calculator():
     file_path = input("请输入文件路径:")
-    file_hash = calculate_file_hash(file_path)
+    algorithm = get_hash_algorithm()
+    try:
+        file_hash = calculate_file_hash(file_path, algorithm)
+    except ValueError:
+        print("不支持的哈希算法")
+        return
     if file_hash is None:
         print("文件不存在")
     else:
@@ -63,14 +68,22 @@ def run_file_hash_calculator():
 
 def run_file_hash_verifier():
     file_path = input("请输入文件路径:")
-    expected_hash = input("请输入期望的 SHA-256 哈希值:")
-    result = verify_file_hash(file_path,expected_hash)
+    algorithm = get_hash_algorithm()
+    expected_hash = input("请输入期望的哈希值:")
+    try:
+        result = verify_file_hash(file_path, expected_hash, algorithm)
+    except ValueError:
+        print("不支持的哈希算法")
+        return
     if result is None:
         print("文件不存在")
     elif result:
         print("文件哈希匹配")
     else:
         print("文件哈希不匹配")
+
+def get_hash_algorithm():
+    return input("请输入哈希算法(sha256/md5/sha1/sha512):").strip().lower()
 
 def display_result(result, success_message, failure_message):
     if result:
