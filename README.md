@@ -49,3 +49,14 @@ security-toolkit/
 ## License
 
 This project is licensed under the MIT license.
+
+## Requirement
+
+` python 3.13+
+
+## Future Improvements
+
+- Add more password security rules
+- Add configurable weak password dictionaries
+- Add unit tests
+- Add a command-line interface

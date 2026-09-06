@@ -11,20 +11,48 @@ from modules.password_analyzer import (
     check_no_simple_sequence,
 )
 import getpass
+from modules.file_hash import calculate_file_hash
 
 def main():
+    while True:
+        print("1. Password Analyzer")
+        print("2. File Hash Calculator")
+        print("3. Exit")
+        choice = input("请选择功能：")
+        if choice == "1":
+            run_password_analyzer()
+        
+        elif choice == "2":
+            run_file_hash_calculator()
+
+        elif choice == "3":
+            print("程序已退出")
+            break
+        
+        else:
+            print("无效输入，请输入 1 或 2")
+
+def run_password_analyzer():
     password = getpass.getpass("请输入一个密码：")
     for function, success_message, failure_message in checks:
         result = function(password)
         display_result(result, success_message, failure_message)
-
+                
     print()
-
+                
     score = calculate_score(password)
-
+                
     print(f'密码得分:{score}/5')
     print(f'密码强度:{get_strength(password)}')
     print(get_password_feedback(password))
+
+def run_file_hash_calculator():
+    file_path = input("请输入文件路径:")
+    file_hash = calculate_file_hash(file_path)
+    if file_hash is None:
+        print("文件不存在")
+    else:
+        print(file_hash)
 
 def display_result(result, success_message, failure_message):
     if result:
