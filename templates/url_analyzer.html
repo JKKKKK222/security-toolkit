@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>URL Analyzer</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Security Toolkit</h1>
+
+            <p>
+                A lightweight Python toolkit for cybersecurity learning and practice.
+            </p>
+        </div>
+    </header>
+
+
+    <main class="container">
+
+        <section class="page-header">
+
+            <a
+                href="{{ url_for('home') }}"
+                class="back-link"
+            >
+                ← Back to Home
+            </a>
+
+            <h2>URL Analyzer</h2>
+
+            <p>
+                Analyze suspicious URL characteristics and calculate a risk score.
+            </p>
+
+        </section>
+
+
+        <section class="analyzer-panel">
+
+            <h3>Analyze URL</h3>
+
+            <form
+                method="POST"
+                action="{{ url_for('url_analyzer_page') }}"
+                class="url-form"
+            >
+
+                <label for="url">URL</label>
+
+                <input
+                    type="text"
+                    id="url"
+                    name="url"
+                    placeholder="https://example.com"
+                    value="{{ submitted_url }}"
+                >
+
+                <button type="submit">
+                    Analyze URL
+                </button>
+
+            </form>
+
+
+            {% if error %}
+
+                <div class="error-box">
+                    {{ error }}
+                </div>
+
+            {% endif %}
+
+
+            {% if result %}
+
+                <div class="result-panel">
+
+                    <h3>Analysis Result</h3>
+
+                    <div class="result-row">
+                        <span>URL</span>
+                        <strong>{{ result["url"] }}</strong>
+                    </div>
+
+                    <div class="result-row">
+                        <span>协议</span>
+                        <strong>{{ result["scheme"] }}</strong>
+                    </div>
+
+                    <div class="result-row">
+                        <span>主机名</span>
+                        <strong>{{ result["hostname"] }}</strong>
+                    </div>
+
+                    <div class="result-row">
+                        <span>端口</span>
+
+                        <strong>
+                            {% if result["port"] %}
+                                {{ result["port"] }}
+                            {% else %}
+                                默认
+                            {% endif %}
+                        </strong>
+                    </div>
+
+                    <div class="result-row">
+                        <span>是否使用 HTTPS</span>
+
+                        <strong>
+                            {{ "是" if result["uses_https"] else "否" }}
+                        </strong>
+                    </div>
+
+                    <div class="result-row">
+                        <span>是否使用 IP 地址</span>
+
+                        <strong>
+                            {{ "是" if result["uses_ip_address"] else "否" }}
+                        </strong>
+                    </div>
+
+                    <div class="result-row">
+                        <span>是否发现可疑端口</span>
+
+                        <strong>
+                            {{ "是" if result["suspicious_port"] else "否" }}
+                        </strong>
+                    </div>
+
+                    <div class="result-row">
+                        <span>是否过长</span>
+
+                        <strong>
+                            {{ "是" if result["too_long"] else "否" }}
+                        </strong>
+                    </div>
+
+                    <div class="result-row">
+                        <span>是否包含 @ 字符</span>
+
+                        <strong>
+                            {{ "是" if result["has_at_symbol"] else "否" }}
+                        </strong>
+                    </div>
+
+                    <div class="result-row">
+                        <span>风险分数</span>
+                        <strong>{{ result["risk_score"] }}</strong>
+                    </div>
+
+                    <div class="result-row">
+                        <span>风险等级</span>
+                        <strong>{{ result["risk_level"] }}</strong>
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <div class="container">
+            <p>
+                security-toolkit · Built with Python & Flask
+            </p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

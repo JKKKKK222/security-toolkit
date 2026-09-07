@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Security Toolkit</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+
+            <h1>Security Toolkit</h1>
+
+            <p>
+                A lightweight Python toolkit for cybersecurity learning and practice.
+            </p>
+
+        </div>
+    </header>
+
+
+    <main class="container">
+
+        <section class="intro">
+
+            <h2>Security Tools</h2>
+
+            <p>
+                Select a tool to start analyzing.
+            </p>
+
+        </section>
+
+
+        <section class="tool-grid">
+
+            <div class="tool-card">
+
+                <h3>Password Analyzer</h3>
+
+                <p>
+                    Analyze password strength and detect common security weaknesses.
+                </p>
+
+                <span>Python</span>
+
+            </div>
+
+
+            <div class="tool-card">
+
+                <h3>File Hash Calculator</h3>
+
+                <p>
+                    Calculate MD5, SHA-1, SHA-256 and SHA-512 hashes for files.
+                </p>
+
+                <span>Integrity</span>
+
+            </div>
+
+
+            <div class="tool-card">
+
+                <h3>File Hash Verify</h3>
+
+                <p>
+                    Compare a file hash with an expected value to verify integrity.
+                </p>
+
+                <span>Hash</span>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('url_analyzer_page') }}"
+                class="tool-card tool-link"
+            >
+
+                <h3>URL Analyzer</h3>
+
+                <p>
+                    Analyze suspicious URL characteristics and calculate a risk score.
+                </p>
+
+                <span>Web Security</span>
+
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <div class="container">
+
+            <p>
+                security-toolkit · Built with Python & Flask
+            </p>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>
