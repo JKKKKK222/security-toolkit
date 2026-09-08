@@ -16,6 +16,10 @@ from modules.file_hash import (
     verify_file_hash
 )
 from modules.url_analyzer import analyze_url
+from modules.port_scanner import (
+    scan_ports,
+    scan_common_ports
+)
 
 def main():
     while True:
@@ -23,7 +27,8 @@ def main():
         print("2. File Hash Calculator")
         print("3. File Hash Verify")
         print("4. URL Analyzer")
-        print("5. Exit")
+        print("5. Port Scanner")
+        print("6. Exit")
         choice = input("请选择功能：")
         if choice == "1":
             run_password_analyzer()
@@ -38,6 +43,9 @@ def main():
             run_url_analyzer()
 
         elif choice == "5":
+            run_port_scanner()
+
+        elif choice == "6":
             print("程序退出")
             break
         
@@ -141,6 +149,47 @@ def run_url_analyzer():
     print(f'是否有@字符:{"是" if result["has_at_symbol"]else "否"}')
     print(f'风险分数:{result["risk_score"]}')
     print(f'风险级别:{result["risk_level"]}')
+
+def run_port_scanner():
+    print("1. Scan The Specified Port")
+    print("2. Scan Common Port")
+    print("3. Exit")
+    while True:
+        choice = input("请选择功能:")
+        if choice == "1":
+            host = input("请输入目标主机:").strip()
+            try:
+                start_port = int(input("请输入初始端口:"))
+            except ValueError:
+                print("端口形式输入错误")
+                return
+
+            try:
+                end_port = int(input("请输入终止端口:"))
+            except ValueError:
+                print("端口形式输入错误")
+                return
+        
+            result = scan_ports(host, start_port, end_port)
+            if result is None:
+                print("主机或端口范围无效")
+                return
+            break
+
+        elif choice == "2":
+            host = input("请输入目标主机:").strip()
+
+            result = scan_common_ports(host)
+            if result is None:
+                print("目标主机无效")
+                return
+            break
+
+        elif choice == "3":
+            return
+
+        else:
+            print("输入无效，请重新输入")
 
 if __name__ == "__main__":
     main()
